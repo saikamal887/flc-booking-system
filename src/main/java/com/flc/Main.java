@@ -12,6 +12,10 @@ public class Main {
     static BookingManager bookingManager = new BookingManager();
     static ReportGenerator reportGenerator = new ReportGenerator(timetable);
 
+    static {
+        bookingManager.seedSampleData(timetable);
+    }
+
     public static void main(String[] args) {
 
         System.out.println("╔══════════════════════════════════════════╗");

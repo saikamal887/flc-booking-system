@@ -179,4 +179,44 @@ public class BookingManager {
     public List<Booking> getAllBookings() {
         return allBookings;
     }
+
+    // ── Seed sample data (25 attended bookings for reports) ──
+    public void seedSampleData(Timetable timetable) {
+        preBook("M01", "W1-SAT-AM", timetable, "Excellent yoga session, very calming", 5);
+        preBook("M02", "W1-SAT-AM", timetable, "Very relaxing and enjoyable", 4);
+        preBook("M03", "W1-SAT-AM", timetable, "Best start to the weekend", 5);
+        preBook("M04", "W1-SAT-PM", timetable, "Great dance workout, loved it", 4);
+        preBook("M05", "W1-SAT-PM", timetable, "Good but quite intense", 3);
+        preBook("M06", "W1-SUN-AM", timetable, "Loved the water exercises", 4);
+        preBook("M07", "W1-SUN-AM", timetable, "So refreshing and fun", 5);
+        preBook("M08", "W1-SUN-PM", timetable, "Tough but very rewarding", 4);
+        preBook("M09", "W1-SUN-PM", timetable, "Very challenging session", 3);
+        preBook("M01", "W2-SAT-AM", timetable, "Amazing zumba class", 5);
+        preBook("M02", "W2-SAT-AM", timetable, "Really fun session", 4);
+        preBook("M10", "W2-SUN-AM", timetable, "Incredible box fit class", 5);
+        preBook("M03", "W2-SUN-AM", timetable, "Great high intensity workout", 4);
+        preBook("M04", "W3-SAT-AM", timetable, "Best box fit session so far", 5);
+        preBook("M05", "W3-SAT-AM", timetable, "Really pushed my limits", 4);
+        preBook("M06", "W3-SAT-PM", timetable, "Calming and restorative yoga", 5);
+        preBook("M07", "W3-SUN-PM", timetable, "Full body challenge, loved it", 4);
+        preBook("M08", "W4-SAT-AM", timetable, "Outstanding body blitz class", 5);
+        preBook("M09", "W4-SAT-AM", timetable, "Very hard but effective", 3);
+        preBook("M10", "W4-SUN-AM", timetable, "Perfect end to month one", 5);
+        preBook("M01", "W4-SUN-PM", timetable, "Nice cool-down aquacise session", 4);
+        preBook("M02", "W5-SAT-AM", timetable, "Lovely aqua session", 4);
+        preBook("M03", "W5-SAT-PM", timetable, "Intense and very effective", 5);
+        preBook("M04", "W6-SAT-AM", timetable, "Mindful and energising yoga", 5);
+        preBook("M05", "W6-SUN-AM", timetable, "Great cardio zumba session", 4);
+    }
+
+    private void preBook(String memberId, String lessonId, Timetable timetable, String review, int rating) {
+        Member member = getMemberById(memberId);
+        Lesson lesson = timetable.getLessonById(lessonId);
+        if (member == null || lesson == null) return;
+        String bookingId = "B" + String.format("%03d", bookingCounter++);
+        Booking booking = new Booking(bookingId, member, lesson);
+        booking.attend(review, rating);
+        lesson.addBooking(booking);
+        allBookings.add(booking);
+    }
 }
